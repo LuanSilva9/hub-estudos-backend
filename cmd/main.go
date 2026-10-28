@@ -6,7 +6,7 @@ import (
 
 	"github.com/LuanSilva9/hub-estudos-backend/conf"
 	"github.com/LuanSilva9/hub-estudos-backend/conf/db"
-	"github.com/LuanSilva9/hub-estudos-backend/pkg/shared/auth"
+	"github.com/LuanSilva9/hub-estudos-backend/pkg/shared/modules/auth"
 	"github.com/gin-gonic/gin"
 )
 

@@ -20,7 +20,7 @@ type AuthHandler struct {
 }
 
 func (h *AuthHandler) Register(c *gin.Context) {
-	var input CredentialsRegister
+	var input CredentialsRegisterRequest
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "JSON Inválido"})
@@ -64,13 +64,18 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Erro interno",
 		})
+
+		return
 	}
 
-	c.JSON(http.StatusCreated, userCreated)
+	c.JSON(http.StatusCreated, &RegisterResponse{
+		Message: "Usuário Criado com Sucesso!",
+		User:    users.EntityToDto(userCreated),
+	})
 }
 
 func (h *AuthHandler) Login(c *gin.Context) {
-	var input CredentialsLogin
+	var input CredentialsLoginRequest
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -133,10 +138,9 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"access_token": signed,
-		"token_type":   "Bearer",
-		"expires_in":   ttlHours * 3600,
-		"user":         user.Username,
+	c.JSON(http.StatusOK, &AuthResponse{
+		Token:     signed,
+		TokenType: "Bearer",
+		ExpiresAt: ttlHours * 24,
 	})
 }
