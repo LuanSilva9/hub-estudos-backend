@@ -20,7 +20,7 @@ type AuthHandler struct {
 }
 
 func (h *AuthHandler) Register(c *gin.Context) {
-	var input CredentialsRegisterRequest
+	var input users.CredentialsRegisterRequest
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "JSON Inválido"})
@@ -75,7 +75,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 }
 
 func (h *AuthHandler) Login(c *gin.Context) {
-	var input CredentialsLoginRequest
+	var input users.CredentialsLoginRequest
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

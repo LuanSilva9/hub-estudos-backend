@@ -6,6 +6,17 @@ import (
 	"github.com/google/uuid"
 )
 
+type CredentialsRegisterRequest struct {
+	Name     string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type CredentialsLoginRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type ReadUserResponse struct {
 	Id        *uuid.UUID `json:"id"`
 	Username  string     `json:"username"`
