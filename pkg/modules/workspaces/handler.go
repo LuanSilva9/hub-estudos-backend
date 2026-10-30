@@ -13,9 +13,10 @@ type WorkspaceHandler struct {
 	userRepository *users.UserRepository
 }
 
-func InitWorkspaceHandler(repository *WorkspaceRepository) *WorkspaceHandler {
+func InitWorkspaceHandler(repository *WorkspaceRepository, userRepository *users.UserRepository) *WorkspaceHandler {
 	return &WorkspaceHandler{
-		repository: repository,
+		repository:     repository,
+		userRepository: userRepository,
 	}
 }
 
