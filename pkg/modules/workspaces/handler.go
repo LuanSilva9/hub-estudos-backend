@@ -30,7 +30,7 @@ func (h *WorkspaceHandler) Create(c *gin.Context) {
 
 	var workspaceRequest CreateWorkspaceRequest
 
-	if err := c.ShouldBindJSON(&workspaceRequest).Error; err != nil {
+	if err := c.ShouldBindJSON(&workspaceRequest); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Erro ao buscar usuário"})
 		return
 	}
