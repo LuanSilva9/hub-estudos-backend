@@ -3,6 +3,7 @@ package users
 import (
 	"net/http"
 
+	"github.com/LuanSilva9/hub-estudos-backend/pkg/shared/exceptions"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -23,14 +24,14 @@ func (h *UserHandler) FindMe(c *gin.Context) {
 	userIdParsed, err := uuid.Parse(userId)
 
 	if !ok || err != nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "ID do usuário inválido"})
+		exceptions.Unauthorized(c, "ID inválido")
 		return
 	}
 
 	me, err := h.repository.FindByID(c.Request.Context(), userIdParsed)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Usuário não encontrado"})
+		exceptions.NotFound(c, "Usuário não encontrado")
 		return
 	}
 

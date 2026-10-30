@@ -1,9 +1,8 @@
 package workspaces
 
 import (
-	"net/http"
-
 	"github.com/LuanSilva9/hub-estudos-backend/pkg/modules/users"
+	"github.com/LuanSilva9/hub-estudos-backend/pkg/shared/exceptions"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -25,14 +24,14 @@ func (h *WorkspaceHandler) Create(c *gin.Context) {
 	userIdParsed, err := uuid.Parse(userId)
 
 	if !ok || err != nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "ID do usuário inválido"})
+		exceptions.Unauthorized(c, "Usuário Inválido ou sem autorização")
 		return
 	}
 
 	var workspaceRequest CreateWorkspaceRequest
 
 	if err := c.ShouldBindJSON(&workspaceRequest); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Erro ao buscar usuário"})
+		exceptions.BadRequest(c, "Requisição ou JSON inválidos")
 		return
 	}
 
@@ -42,7 +41,7 @@ func (h *WorkspaceHandler) Create(c *gin.Context) {
 	})
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro interno ao criar usuário"})
+		exceptions.InternalServerError(c, "Erro interno ao criar Workspace, contate um administrador")
 		return
 	}
 
