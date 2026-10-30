@@ -19,6 +19,12 @@ type AuthHandler struct {
 	DB *gorm.DB
 }
 
+func InitAuthHandler(db *gorm.DB) *AuthHandler {
+	return &AuthHandler{
+		DB: db,
+	}
+}
+
 func (h *AuthHandler) Register(c *gin.Context) {
 	var input users.CredentialsRegisterRequest
 
@@ -70,7 +76,6 @@ func (h *AuthHandler) Register(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, &RegisterResponse{
 		Message: "Usuário Criado com Sucesso!",
-		User:    users.EntityToDto(userCreated),
 	})
 }
 

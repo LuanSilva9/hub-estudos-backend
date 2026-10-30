@@ -1,10 +1,7 @@
 package auth
 
-import "github.com/LuanSilva9/hub-estudos-backend/pkg/modules/users"
-
 type RegisterResponse struct {
-	Message string                  `json:"message"`
-	User    *users.ReadUserResponse `json:"user"`
+	Message string `json:"message"`
 }
 
 type AuthResponse struct {
