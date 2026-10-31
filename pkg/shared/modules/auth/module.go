@@ -8,6 +8,6 @@ import (
 func InitAuthModule(r *gin.RouterGroup, db *gorm.DB) {
 	authHandler := InitAuthHandler(db)
 
-	r.POST("/auth/signin", authHandler.Login)
-	r.POST("/auth/register", authHandler.Register)
+	r.POST("/signin", authHandler.Login)
+	r.POST("/register", authHandler.Register)
 }
