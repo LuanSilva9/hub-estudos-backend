@@ -1,6 +1,8 @@
 package workspaces
 
 import (
+	"net/http"
+
 	"github.com/LuanSilva9/hub-estudos-backend/pkg/modules/users"
 	"github.com/LuanSilva9/hub-estudos-backend/pkg/shared/exceptions"
 	"github.com/gin-gonic/gin"
@@ -35,7 +37,7 @@ func (h *WorkspaceHandler) Create(c *gin.Context) {
 		return
 	}
 
-	_, err = h.repository.Create(c.Request.Context(), &Workspace{
+	workspaceCreated, err := h.repository.Create(c.Request.Context(), &Workspace{
 		Name:   workspaceRequest.Name,
 		UserID: userIdParsed,
 	})
@@ -44,5 +46,14 @@ func (h *WorkspaceHandler) Create(c *gin.Context) {
 		exceptions.InternalServerError(c, "Erro interno ao criar Workspace, contate um administrador")
 		return
 	}
+
+	workspaceCreated, err = h.repository.FindByID(c.Request.Context(), *workspaceCreated.Id)
+
+	if err != nil {
+		exceptions.NotFound(c, "Usuário foi criado, mas o sistema não conseguiu capturar ele!")
+		return
+	}
+
+	c.JSON(http.StatusOK, EntityToDto(*workspaceCreated))
 
 }

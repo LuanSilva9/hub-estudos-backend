@@ -20,7 +20,7 @@ func InitWorkspaceRepository(db *gorm.DB) *WorkspaceRepository {
 func (r *WorkspaceRepository) FindByID(ctx context.Context, id uuid.UUID) (*Workspace, error) {
 	var workspaceFinded *Workspace
 
-	if err := r.DB.WithContext(ctx).Where("id = ?", id).First(&workspaceFinded).Error; err != nil {
+	if err := r.DB.WithContext(ctx).Preload("User").Where("id = ?", id).First(&workspaceFinded).Error; err != nil {
 		return nil, err
 	}
 
