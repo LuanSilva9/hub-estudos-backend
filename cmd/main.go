@@ -7,6 +7,7 @@ import (
 	"github.com/LuanSilva9/hub-estudos-backend/conf"
 	"github.com/LuanSilva9/hub-estudos-backend/conf/db"
 	"github.com/LuanSilva9/hub-estudos-backend/pkg/modules/users"
+	"github.com/LuanSilva9/hub-estudos-backend/pkg/modules/workspaces"
 	"github.com/LuanSilva9/hub-estudos-backend/pkg/shared/modules/auth"
 	"github.com/gin-gonic/gin"
 )
@@ -28,6 +29,7 @@ func main() {
 
 	auth.InitAuthModule(r.Group("/auth"), db)
 	users.InitUserModule(r.Group("/users"), db, auth.RequireAuth())
+	workspaces.InitWorkspaceModule(r.Group("/workspaces"), db, auth.RequireAuth())
 
 	r.Run(fmt.Sprintf(":%s", cfg.Port))
 }
